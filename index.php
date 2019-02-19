@@ -55,10 +55,6 @@
 	<script type="text/javascript" src="js/customAutocomplete.js"></script>
     <script>
         $(function() {
-            function log( message ) {
-                $( "<div>" ).text( message ).prependTo( "#log" );
-                $( "#log" ).scrollTop( 0 );
-            }
             var autocompleteUrl = "http://localhost:8070/api/v1/search";
             $( "#flights-origin" ).autocomplete({
                 delay: 50,
@@ -78,22 +74,18 @@
                 },
                 minLength: 3,
                 select: function( event, ui ) {
-                    console.log(ui);
-                    log( ui.item ?
-                        "Airport Name: " + ui.item.airportName + "  |  City Name: " + ui.item.cityName:
-                        "Nothing selected, input was " + this.value);
+                    console.log('select');
+                    $.fn.logAutocomplete( event, ui );
                 },
                 open: function(event, ui) {
-                    console.log('open');
-                    console.log(ui);
-                    $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-                    // $(this).html(ui.item.airportName);
+                    $.fn.openAutocomplete();
                 },
                 close: function() {
-                    console.log('close');
-                    $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                    $.fn.closeAutocomplete();
                 }
-            });
+            }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                return $.fn.buildAutocomplete( ul, item );
+            };
         });
     </script>
 
