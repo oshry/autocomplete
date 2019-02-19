@@ -14,6 +14,7 @@
 
 (function( $ ){
 	function log( message ) {
+        $("#log").html("");
 		$( "<div>" ).text( message ).prependTo( "#log" );
 		$( "#log" ).scrollTop( 0 );
 	}
